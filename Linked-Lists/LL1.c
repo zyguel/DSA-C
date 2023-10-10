@@ -131,11 +131,26 @@ void insert_beginning(LIST *A, int elem){
 
 
 
-/*
-void insert_at(LIST *A){
-	
-}*/
- void show_commands();
+
+void insert_at(LIST *A,int pos,int data){
+	LIST temp = (LIST) malloc(sizeof(cptr));
+	temp->data = data;
+	temp->link = NULL;
+	if(pos == 0){
+		temp->link = *A;
+		*A = temp;
+	}else {
+		LIST temp2 = (LIST) malloc(sizeof(cptr));
+		temp2 = *A;
+		int ndx;
+		for (ndx = 0; ndx < pos - 1; temp2 = temp2->link, ndx++);
+		temp->link = temp2->link;
+		temp2->link = temp;
+	}
+}
+
+
+void show_commands();
  void enter_choice();
 int main (int argc, char *argv[]){
 	LIST A;
@@ -192,14 +207,19 @@ void show_commands(){
 
 void enter_choice(LIST *A){
 	int choice;
-
+	
 	printf("Command #");
-	scanf(" %d", &choice);
-   
 
+   	if (scanf(" %d", &choice) != 1 || !isInputValid())
+  	{
+   		printf("Error: Invalid input\n");
+    //	exit(1);
+ 	}
+ 	int num, ndx;
 
         switch (choice) {
-            case 1:
+          
+		    case 1:
                 printf("\nYou selected Option 1 : Populate Linked List\n");
                 // Add code for Option 1 here
                 break;
@@ -211,13 +231,12 @@ void enter_choice(LIST *A){
                 printf("\n\n");
                 printf("To continue press Enter");
                 getchar();
-                getchar();
         	//	portableSleep(2000);  // Sleep for 2 seconds
                 break;
                 
             case 3:
                 printf("\nYou selected Option 3 : Insert front\n");
-                int num, ndx;
+              
 				// Add code for Option 3 here 
                 printf("How many times do you want to insert : ");
                 scanf(" %d", &num);
@@ -227,16 +246,38 @@ void enter_choice(LIST *A){
                 	if (scanf("%d", &elem) != 1 || !isInputValid())
   						{
      					   printf("Error: Invalid input\n");
-    					   exit(1);
+    					  // exit(1);
+    					  break;
  						}
                 	insert_beginning(A, elem);
-					//portableSleep(300);
+					
 				}
                 break;
                 
             case 4:
                 printf("\nYou selected Option 4 : Insert at position\n");
-                break;
+                //int num, ndx;
+				printf("How many times do you want to insert? : ");
+				scanf("%d", &num);
+                for (ndx = 0; ndx < num; ndx++){
+                	int pos, data;
+                	printf("Attempt # %d\n", ndx + 1);
+					printf("Enter value: ");
+					if (scanf("%d", &data) != 1 || !isInputValid())
+  					{
+     				   printf("Error: Invalid input\n");
+    				   break;
+ 					}
+					printf("Enter position: ");
+					if (scanf("%d", &pos) != 1 || !isInputValid())
+  					{
+     				   printf("Error: Invalid input\n");
+    				   break;
+ 					}
+ 					insert_at(A,pos,data);	
+				}
+				
+				break;
             case 7: 
 				printf("Exiting!");
 				portableSleep(2000);
