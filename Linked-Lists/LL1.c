@@ -40,7 +40,7 @@ void clearConsole()
     system("clear");
 #endif
 }
-
+#define COUNT
 //Integer input validattion
 
 bool isInputValid()
@@ -66,6 +66,7 @@ typedef struct linked_list {
 	int data; // 4 bytes
 	struct linked_list *link; // 4 bytes
 }*LIST, cptr;
+
 // Insertion or Acessing Linked List Time complexity is: O(n)
 // The runtime is directly proportional to the size of the input data. 
 //Example: iterating through an array.
@@ -139,6 +140,7 @@ void insert_at(LIST *A,int pos,int data){
 	if(pos == 0){
 		temp->link = *A;
 		*A = temp;
+	
 	}else {
 		LIST temp2 = (LIST) malloc(sizeof(cptr));
 		temp2 = *A;
@@ -146,6 +148,7 @@ void insert_at(LIST *A,int pos,int data){
 		for (ndx = 0; ndx < pos - 1; temp2 = temp2->link, ndx++);
 		temp->link = temp2->link;
 		temp2->link = temp;
+	
 	}
 }
 
@@ -155,6 +158,7 @@ void show_commands();
 int main (int argc, char *argv[]){
 	LIST A;
 	init_List(&A); 
+	printf("%d", COUNT);
 //	LIST temp = (LIST) malloc(sizeof(cptr)); 
 	// cptr is an alias for struct linked_list;
 //	temp->data = 2;
