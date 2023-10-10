@@ -130,9 +130,6 @@ void insert_beginning(LIST *A, int elem){
 	}
 }
 
-
-
-
 void insert_at(LIST *A,int pos,int data){
 	LIST temp = (LIST) malloc(sizeof(cptr));
 	temp->data = data;
@@ -147,8 +144,13 @@ void insert_at(LIST *A,int pos,int data){
 			LIST curr = (LIST) malloc(sizeof(cptr));
 			curr = *A;
 			int ndx;
-			for (ndx = 0; ndx < pos - 1; curr = curr->link, ndx++);
-		
+			for (ndx = 0; ndx < pos - 1 && curr != NULL; curr = curr->link, ndx++);
+			if (curr == NULL){
+				printf("Invalid pos! Press Enter to continue!");
+				getchar();
+				free(temp);
+				return;
+			}
 			temp->link = curr->link;
 			curr->link = temp;
 			
@@ -156,6 +158,7 @@ void insert_at(LIST *A,int pos,int data){
 	}
 }
 
+//void delete_at(LIST *A, int pos, int elem)
 
 void show_commands();
  void enter_choice();
@@ -206,7 +209,7 @@ void show_commands(){
      printf("|   2    | Traversal and Display   |\n");
      printf("|   3    | Insert at beginning     |\n");
      printf("|   4    | Insert at nth position  |\n");
-     printf("|   5    | Insert at last			|\n");
+     printf("|   5    | Insert at last	   |\n");
      printf("|   6    | delete at nth position  |\n");
      printf("|   7    | Exit                    |\n");
      printf("+----------------------------------+\n");
