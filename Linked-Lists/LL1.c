@@ -66,7 +66,7 @@ typedef struct linked_list {
 	int data; // 4 bytes
 	struct linked_list *link; // 4 bytes
 }*LIST, cptr;
-
+typedef int List_Size;
 // Insertion or Acessing Linked List Time complexity is: O(n)
 // The runtime is directly proportional to the size of the input data. 
 //Example: iterating through an array.
@@ -135,7 +135,6 @@ void insert_at(LIST *A,int pos,int data){
 	temp->data = data;
 	temp->link = NULL;
 	if (pos >= 0){
-	
 		if(pos == 0){
 			temp->link = *A;
 			*A = temp;
@@ -158,7 +157,28 @@ void insert_at(LIST *A,int pos,int data){
 	}
 }
 
-//void delete_at(LIST *A, int pos, int elem)
+void delete_at(LIST *A, int pos){
+	LIST temp = *A;
+	
+	if (*A == NULL){
+		printf("Delete not succesful! List is Empty!");
+		portableSleep(3000);
+	}else if(pos == 0){
+		*A = temp->link;
+		free(temp);
+	}else{
+		LIST curr = *A;
+	
+		int ndx;
+		for(ndx = 0; ndx < pos - 1 && curr != NULL; curr = curr->link, ndx++);
+		if (curr == NULL || curr->link == NULL){
+			printf("Invalid Position!");
+		}
+		temp = curr->link;
+		curr->link = curr->link->link;
+		free(temp);
+	}
+}
 
 void show_commands();
  void enter_choice();
@@ -198,8 +218,10 @@ int main (int argc, char *argv[]){
 }
 
 //https://youtu.be/B31LgI4Y4DQ?si=zyQOwcC91vnptTIj&t=4395
+//https://youtu.be/B31LgI4Y4DQ?si=CutTHJC6_8uUJtac&t=5735
 void show_commands(){
 	 clearConsole();
+	 
 	 printf("+----------------------------------+\n");
      printf("| Command Menu for Linked List     |\n");
      printf("+----------------------------------+\n");
@@ -218,7 +240,7 @@ void show_commands(){
 
 void enter_choice(LIST *A){
 	int choice;
-	
+
 	printf("Command #");
 
    	if (scanf(" %d", &choice) != 1 || !isInputValid())
@@ -226,6 +248,7 @@ void enter_choice(LIST *A){
    		printf("Error: Invalid input\n");
     //	exit(1);
  	}
+
  	int num, ndx;
 
         switch (choice) {
@@ -288,6 +311,19 @@ void enter_choice(LIST *A){
  					insert_at(A,pos,data);	
 				}
 				
+				break;
+			case 6: 
+				printf("\nYou have selected Option 6 : Delete at nth position! \n");
+				printf("How many times do you want to delete ? \n");
+				printf("Enter number of times : ");
+				scanf("%d", &num);
+				for (ndx = 0; ndx < num; ndx++){
+					int pos;
+					printf("Deletion # %d\n", ndx + 1);
+					printf("Enter position to delete : ");
+					scanf("%d", &pos);
+					delete_at(A, pos);
+				}
 				break;
             case 7: 
 				printf("Exiting!");
