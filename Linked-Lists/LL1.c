@@ -179,9 +179,19 @@ void delete_at(LIST *A, int pos){
 		free(temp);
 	}
 }
-
+/*
+void reverse_list(LIST *A){
+	LIST curr = *A; // head
+	LIST prev = *A; // temp node
+	for(;curr != NULL; curr = curr->link);
+	for
+}
+*/
+//Command Menu EHE!
 void show_commands();
- void enter_choice();
+void enter_choice();
+
+
 int main (int argc, char *argv[]){
 	LIST A;
 	init_List(&A); 
@@ -231,9 +241,11 @@ void show_commands(){
      printf("|   2    | Traversal and Display   |\n");
      printf("|   3    | Insert at beginning     |\n");
      printf("|   4    | Insert at nth position  |\n");
-     printf("|   5    | Insert at last	   |\n");
+     printf("|   5    | Insert at last (Not Imp)|\n");
      printf("|   6    | delete at nth position  |\n");
-     printf("|   7    | Exit                    |\n");
+     printf("|   7    | Reverse List            |\n");
+     //you may add additional Commands Here!!
+     printf("|   8    | Exit                    |\n");
      printf("+----------------------------------+\n");
     
 }
@@ -325,7 +337,7 @@ void enter_choice(LIST *A){
 					delete_at(A, pos);
 				}
 				break;
-            case 7: 
+            case 8: 
 				printf("Exiting!");
 				portableSleep(2000);
 				clearConsole();
